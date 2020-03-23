@@ -53,6 +53,11 @@ bool nn_vector_empty(const struct nn_vector* vector);
 void nn_vector_erase(struct nn_vector* vector, size_t index);
 
 /**
+ * clear vector
+ */
+void nn_vector_clear(struct nn_vector* vector);
+
+/**
  * initialize the iterator to the beginning of the vector.
  */
 struct nn_vector_iterator nn_vector_begin(const struct nn_vector* vector);
