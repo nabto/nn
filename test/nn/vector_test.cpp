@@ -19,8 +19,8 @@ BOOST_AUTO_TEST_CASE(init)
 
     char* fooRet;
     nn_vector_get(&vector, 0, &fooRet);
+    BOOST_TEST((void*)foo == (void*)fooRet);
     free(fooRet);
-    BOOST_TEST(foo == fooRet);
 
     nn_vector_deinit(&vector);
     // check with valgrind that no memory is leaked.
@@ -71,6 +71,8 @@ BOOST_AUTO_TEST_CASE(iterator)
     {
         BOOST_TEST(element == foo);
     }
+
+    nn_vector_deinit(&vector);
 }
 
 
