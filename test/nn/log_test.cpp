@@ -52,4 +52,9 @@ BOOST_AUTO_TEST_CASE(test)
     BOOST_TEST(lastMessage.line == (__LINE__ - 3));
 }
 
+BOOST_AUTO_TEST_CASE(null_logger)
+{
+    NN_LOG_ERROR(NULL, logModule, "host %s port %d", "127.0.0.1", 4242);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
