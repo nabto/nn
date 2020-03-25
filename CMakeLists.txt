@@ -5,6 +5,7 @@ find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 set(src
   src/nn/vector.c
   src/nn/string_set.c
+  src/nn/log.c
   )
 
 
