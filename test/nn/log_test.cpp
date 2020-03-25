@@ -16,9 +16,9 @@ extern "C" {
 
 void log_function(enum nn_log_severity severity, const char* module, const char* file, int line, const char* fmt, va_list args)
 {
-    printf("%s %s:%d ", module, file, line);
-    vprintf(fmt, args);
-    printf("\n");
+    //printf("%s %s:%d ", module, file, line);
+    //vprintf(fmt, args);
+    //printf("\n");
 
     lastMessage.severity = severity;
     lastMessage.module = module;
@@ -43,6 +43,11 @@ BOOST_AUTO_TEST_CASE(test)
 
     NN_LOG_ERROR(&logger, logModule, "host %s port %d", "127.0.0.1", 4242);
     BOOST_TEST(lastMessage.severity == NN_LOG_SEVERITY_ERROR);
+    BOOST_TEST(lastMessage.file == __FILE__);
+    BOOST_TEST(lastMessage.line == (__LINE__ - 3));
+
+    NN_LOG_TRACE(&logger, logModule, "host %s port %d", "127.0.0.1", 4242);
+    BOOST_TEST(lastMessage.severity == NN_LOG_SEVERITY_TRACE);
     BOOST_TEST(lastMessage.file == __FILE__);
     BOOST_TEST(lastMessage.line == (__LINE__ - 3));
 }
