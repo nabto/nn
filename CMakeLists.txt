@@ -5,13 +5,16 @@ find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 set(src
   src/nn/vector.c
   src/nn/string_set.c
+  src/nn/log.c
   )
 
 
 set(test_src
   test/nn/vector_test.cpp
   test/nn/string_set_test.cpp
+  test/nn/log_test.cpp
   test/unit_test.cpp
+
   )
 
 add_library(nn "${src}")
