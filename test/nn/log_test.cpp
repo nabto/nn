@@ -14,7 +14,7 @@ struct log_message lastMessage;
 extern "C" {
 #endif
 
-void log_function(enum nn_log_severity severity, const char* module, const char* file, int line, const char* fmt, va_list args)
+void log_function(void* userData, enum nn_log_severity severity, const char* module, const char* file, int line, const char* fmt, va_list args)
 {
     //printf("%s %s:%d ", module, file, line);
     //vprintf(fmt, args);
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_SUITE(logging)
 BOOST_AUTO_TEST_CASE(test)
 {
     struct nn_log logger;
-    logger.logFunction = &log_function;
+    nn_log_init(&logger, log_function, NULL);
 
     NN_LOG_ERROR(&logger, logModule, "host %s port %d", "127.0.0.1", 4242);
     BOOST_TEST(lastMessage.severity == NN_LOG_SEVERITY_ERROR);

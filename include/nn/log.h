@@ -8,18 +8,30 @@ extern "C" {
 #endif
 
 enum nn_log_severity {
-    NN_LOG_SEVERITY_ERROR,
-    NN_LOG_SEVERITY_WARN,
-    NN_LOG_SEVERITY_INFO,
-    NN_LOG_SEVERITY_TRACE
+    NN_LOG_SEVERITY_ERROR = 0x01,
+    NN_LOG_SEVERITY_WARN = 0x02,
+    NN_LOG_SEVERITY_INFO = 0x04,
+    NN_LOG_SEVERITY_TRACE = 0x08
 };
 
-typedef void (*nn_log_print)(enum nn_log_severity severity, const char* module, const char* file, int line, const char* fmt, va_list args);
+/**
+ * Function which is called for each log line which needs to be printed.
+ */
+typedef void (*nn_log_print)(void* userData, enum nn_log_severity severity, const char* module, const char* file, int line, const char* fmt, va_list args);
 
 struct nn_log {
-    nn_log_print logFunction;
+    nn_log_print logPrint;
+    void* userData;
 };
 
+/**
+ * Initialize the logger with the given logFunction and userData.
+ */
+void nn_log_init(struct nn_log* logger, nn_log_print logPrint, void* userData);
+
+/**
+ * Internal adapter for chaning the macto to varargs
+ */
 void nn_log_adapter(struct nn_log* logger, enum nn_log_severity severity, const char* module, const char* file, int line, const char* fmt, ...);
 
 #define VA_ARGS(...) , ##__VA_ARGS__
