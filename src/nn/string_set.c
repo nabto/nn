@@ -53,6 +53,11 @@ bool nn_string_set_empty(struct nn_string_set* set)
     return nn_vector_empty(&set->strings);
 }
 
+size_t nn_string_set_size(struct nn_string_set* set)
+{
+    return nn_vector_size(&set->strings);
+}
+
 
 struct nn_string_set_iterator nn_string_set_begin(const struct nn_string_set* set)
 {

@@ -23,8 +23,9 @@ bool nn_llist_empty(const struct nn_llist* llist)
 size_t nn_llist_size(const struct nn_llist* llist)
 {
     size_t size = 0;
-    void* item;
-    NN_LLIST_FOREACH(item, llist) {
+    struct nn_llist_iterator it;
+    for (it = nn_llist_begin(llist); !nn_llist_is_end(&it); nn_llist_next(&it))
+    {
         size++;
     }
     return size;
@@ -83,7 +84,7 @@ struct nn_llist_iterator nn_llist_end(const struct nn_llist* llist)
 {
     struct nn_llist_iterator iterator;
     iterator.list = llist;
-    iterator.node = &llist->sentinel;
+    iterator.node = (struct nn_llist_node*)&llist->sentinel;
     return iterator;
 }
 

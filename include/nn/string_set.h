@@ -41,6 +41,11 @@ bool nn_string_set_contains(const struct nn_string_set* set, const char* item);
 bool nn_string_set_empty(struct nn_string_set* set);
 
 /**
+ * @return the size of the set
+ */
+size_t nn_string_set_size(struct nn_string_set* set);
+
+/**
  * Initialize the iterator to the first element in the set.
  */
 struct nn_string_set_iterator nn_string_set_begin(const struct nn_string_set* set);
