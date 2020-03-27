@@ -46,4 +46,15 @@ BOOST_AUTO_TEST_CASE(create_insert_remove)
     nn_llist_deinit(&list);
 }
 
+BOOST_AUTO_TEST_CASE(list_end)
+{
+    struct nn_llist list;
+    nn_llist_init(&list);
+
+    struct nn_llist_iterator it = nn_llist_end(&list);
+    BOOST_TEST(nn_llist_is_end(&it));
+
+    nn_llist_deinit(&list);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
