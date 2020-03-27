@@ -7,6 +7,7 @@ set(src
   src/nn/string_set.c
   src/nn/log.c
   src/nn/llist.c
+  src/nn/string_map.c
   )
 
 
@@ -15,6 +16,7 @@ set(test_src
   test/nn/string_set_test.cpp
   test/nn/log_test.cpp
   test/nn/llist_test.cpp
+  test/nn/string_map_test.cpp
   test/unit_test.cpp
 
   )

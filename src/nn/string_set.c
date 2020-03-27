@@ -61,9 +61,9 @@ struct nn_string_set_iterator nn_string_set_begin(const struct nn_string_set* se
     return it;
 }
 
-bool nn_string_set_end(const struct nn_string_set_iterator* it)
+bool nn_string_set_is_end(const struct nn_string_set_iterator* it)
 {
-    return nn_vector_end(&it->it);
+    return nn_vector_is_end(&it->it);
 }
 
 void nn_string_set_next(struct nn_string_set_iterator* it)

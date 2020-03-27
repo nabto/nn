@@ -31,7 +31,7 @@ size_t nn_llist_size(const struct nn_llist* llist)
 }
 
 // add an node to the end of the llist
-void nn_llist_append(struct nn_llist* llist, struct nn_llist_node* node, void* item)
+struct nn_llist_iterator nn_llist_append(struct nn_llist* llist, struct nn_llist_node* node, void* item)
 {
     node->item = item;
     struct nn_llist_node* before = llist->sentinel.prev;
@@ -41,6 +41,11 @@ void nn_llist_append(struct nn_llist* llist, struct nn_llist_node* node, void* i
     node->next = after;
     after->prev = node;
     node->prev = before;
+
+    struct nn_llist_iterator it;
+    it.list = llist;
+    it.node = node;
+    return it;
 }
 
 // erase an node from the llist.
@@ -74,7 +79,15 @@ void nn_llist_next(struct nn_llist_iterator* iterator)
     iterator->node = iterator->node->next;
 }
 
-bool nn_llist_end(const struct nn_llist_iterator* iterator)
+struct nn_llist_iterator nn_llist_end(const struct nn_llist* llist)
+{
+    struct nn_llist_iterator iterator;
+    iterator.list = llist;
+    iterator.node = &llist->sentinel;
+    return iterator;
+}
+
+bool nn_llist_is_end(const struct nn_llist_iterator* iterator)
 {
     return iterator->node == &iterator->list->sentinel;
 }

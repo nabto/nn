@@ -30,12 +30,12 @@ BOOST_AUTO_TEST_CASE(create_insert_remove)
 
     struct nn_llist_iterator it = nn_llist_begin(&list);
 
-    BOOST_TEST(!nn_llist_end(&it));
+    BOOST_TEST(!nn_llist_is_end(&it));
     BOOST_TEST(nn_llist_get_item(&it) == (void*)foo);
     nn_llist_next(&it);
     BOOST_TEST(nn_llist_get_item(&it) == (void*)bar);
     nn_llist_next(&it);
-    BOOST_TEST(nn_llist_end(&it));
+    BOOST_TEST(nn_llist_is_end(&it));
 
     it = nn_llist_begin(&list);
     nn_llist_erase(&it);

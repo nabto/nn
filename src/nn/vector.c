@@ -85,7 +85,7 @@ void nn_vector_next(struct nn_vector_iterator* iterator)
     iterator->current += 1;
 }
 
-bool nn_vector_end(const struct nn_vector_iterator* iterator)
+bool nn_vector_is_end(const struct nn_vector_iterator* iterator)
 {
     return iterator->current >= iterator->vector->used;
 }

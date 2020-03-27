@@ -48,7 +48,7 @@ struct nn_string_set_iterator nn_string_set_begin(const struct nn_string_set* se
 /**
  * @return true iff the iterator is at the end
  */
-bool nn_string_set_end(const struct nn_string_set_iterator* it);
+bool nn_string_set_is_end(const struct nn_string_set_iterator* it);
 
 /**
  * Increment the iterator.
@@ -60,7 +60,7 @@ void nn_string_set_next(struct nn_string_set_iterator* it);
  */
 const char* nn_string_set_get_element(const struct nn_string_set_iterator* it);
 
-#define NN_STRING_SET_FOREACH(element, set) for(struct nn_string_set_iterator it = nn_string_set_begin(set); element = nn_string_set_get_element(&it), !nn_string_set_end(&it); nn_string_set_next(&it))
+#define NN_STRING_SET_FOREACH(element, set) for(struct nn_string_set_iterator it = nn_string_set_begin(set); element = nn_string_set_get_element(&it), !nn_string_set_is_end(&it); nn_string_set_next(&it))
 
 #ifdef __cplusplus
 } //extern "C"

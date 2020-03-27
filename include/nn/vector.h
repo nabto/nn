@@ -75,12 +75,12 @@ void nn_vector_next(struct nn_vector_iterator* it);
 /**
  * test if the iterator has reached the end.
  */
-bool nn_vector_end(const struct nn_vector_iterator* it);
+bool nn_vector_is_end(const struct nn_vector_iterator* it);
 
 /**
  * Helper macro to iterate over all elements in the vector
  */
-#define NN_VECTOR_FOREACH(element, vector) for (struct nn_vector_iterator it = nn_vector_begin(vector); nn_vector_get_element(&it, element), !nn_vector_end(&it); nn_vector_next(&it))
+#define NN_VECTOR_FOREACH(element, vector) for (struct nn_vector_iterator it = nn_vector_begin(vector); nn_vector_get_element(&it, element), !nn_vector_is_end(&it); nn_vector_next(&it))
 
 #ifdef __cplusplus
 } //extern "C"

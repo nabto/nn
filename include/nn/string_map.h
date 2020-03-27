@@ -1,56 +1,100 @@
 #ifndef _NN_STRING_MAP_
 #define _NN_STRING_MAP_
 
-#include "nn_list.h"
+/**
+ * Dynamic allocated map<string,string>
+ */
+
+#include <nn/llist.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/**
- * Dynamic allocated map<string,string>
- */
 struct nn_string_map_item {
-    struct nn_list_item item;
+    struct nn_llist_node node;
     char* key;
     char* value;
 };
 
 struct nn_string_map {
-    struct nn_list items;
+    struct nn_llist items;
 };
 
 struct nn_string_map_iterator {
-    struct nn_list_iterator it;
+    struct nn_llist_iterator it;
 };
+
+/**
+ * Initialize a string map
+ */
+void nn_string_map_init(struct nn_string_map* map);
+
+/**
+ * Deinitialize a string map
+ */
+void nn_string_map_deinit(struct nn_string_map* map);
+
 
 /**
  * If an item with the key exists return it, else return NULL;
  */
-struct nn_string_map_item* nn_string_map_get(const struct nn_string_map* map, const char* key);
-struct nn_string_map_item* nn_string_map_getn(const struct nn_string_map* map, const char* key, size_t keyLength);
+struct nn_string_map_iterator nn_string_map_get(const struct nn_string_map* map, const char* key);
+struct nn_string_map_iterator nn_string_map_getn(const struct nn_string_map* map, const char* key, size_t keyLength);
 
 /**
- * insert an item into a string map
+ * Insert an item into a string map.
+ *
+ * If an item with the given key already exists a pointer to that item
+ * is returned.  If the item could not be inserted, an iterator
+ * pointing at the end is returned such that !nn_string_map_end(&it) == true;
  */
-nn_error_code nn_string_map_insert(struct nn_string_map* map, const char* key, const char* value);
+struct nn_string_map_iterator nn_string_map_insert(struct nn_string_map* map, const char* key, const char* value);
 
+/**
+ * Erase a key from the map
+ */
+void nn_string_map_erase(struct nn_string_map* map, const char* key);
 
-void nn_string_map_init(struct nn_string_map* map);
-void nn_string_map_deinit(struct nn_string_map* map);
-
-void nn_string_map_destroy_item(struct nn_string_map_item* item);
-
+/**
+ * return true iff the map is empty
+ */
 bool nn_string_map_empty(const struct nn_string_map* map);
+
+/**
+ * return the number of key value pairs in the map
+ */
 size_t nn_string_map_size(const struct nn_string_map* map);
 
-// iterator
-void nn_string_map_front(const struct nn_string_map* map, struct nn_string_map_iterator* it);
-struct nn_string_map_iterator nn_string_map_front2(const struct nn_string_map* map);
-bool nn_string_map_end(const struct nn_string_map_iterator* it);
-void nn_string_map_next(struct nn_string_map_iterator* it);
+/**
+ * Return the key for an item.
+ */
+const char* nn_string_map_key(struct nn_string_map_iterator* it);
 
-struct nn_string_map_item* nn_string_map_get_element(const struct nn_string_map_iterator* it);
+/**
+ * Return the value for an item.
+ */
+const char* nn_string_map_value(struct nn_string_map_iterator* it);
+
+/**
+ * return a iterator to the start of the key value map
+ */
+struct nn_string_map_iterator nn_string_map_begin(const struct nn_string_map* map);
+
+/**
+ * return iterator to the end of the map.
+ */
+struct nn_string_map_iterator nn_string_map_end(const struct nn_string_map* map);
+
+/**
+ * return true if the iterator is at the end.
+ */
+bool nn_string_map_is_end(const struct nn_string_map_iterator* it);
+
+/**
+ * increment the iterator to the next element
+ */
+void nn_string_map_next(struct nn_string_map_iterator* it);
 
 #define NN_STRING_MAP_FOREACH(item, map) for(struct nn_string_map_iterator it = nn_string_map_front2(map); item = nn_string_map_get_element(&it), !nn_string_map_end(&it); nn_string_map_next(&it))
 

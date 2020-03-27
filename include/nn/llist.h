@@ -54,8 +54,10 @@ size_t nn_llist_size(const struct nn_llist* list);
  *
  * The node is inserted into the list and the item pointer is stored
  * in the node.
+ *
+ * An iterator pointing to the newly inserted element is returned.
  */
-void nn_llist_append(struct nn_llist* list, struct nn_llist_node* node, void* item);
+struct nn_llist_iterator nn_llist_append(struct nn_llist* list, struct nn_llist_node* node, void* item);
 
 /**
  * Remove the node from the list pointed to by the iterator
@@ -63,9 +65,19 @@ void nn_llist_append(struct nn_llist* list, struct nn_llist_node* node, void* it
 void nn_llist_erase(struct nn_llist_iterator* iterator);
 
 /**
+ * remove the node from the list
+ */
+void nn_llist_erase_node(struct nn_llist_node* node);
+
+/**
  * Get an iterator pointing to the start of the list
  */
 struct nn_llist_iterator nn_llist_begin(const struct nn_llist* list);
+
+/**
+ * Create an iterator pointing at the end of the list
+ */
+struct nn_llist_iterator nn_llist_end(const struct nn_llist* list);
 
 /**
  * Increment the iterator to the next item
@@ -75,7 +87,7 @@ void nn_llist_next(struct nn_llist_iterator* iterator);
 /**
  * Query if the end of the list has been reached
  */
-bool nn_llist_end(const struct nn_llist_iterator* iterator);
+bool nn_llist_is_end(const struct nn_llist_iterator* iterator);
 
 /**
  * Get an item from the current iterator position
@@ -92,7 +104,7 @@ void* nn_llist_get_item(const struct nn_llist_iterator* iterator);
  *   ...
  * }
  */
-#define NN_LLIST_FOREACH(item, list) for (struct nn_llist_iterator it = nn_llist_begin(list); item = nn_llist_get_item(&it), !nn_llist_end(&it); nn_llist_next(&it))
+#define NN_LLIST_FOREACH(item, list) for (struct nn_llist_iterator it = nn_llist_begin(list); item = nn_llist_get_item(&it), !nn_llist_is_end(&it); nn_llist_next(&it))
 
 #ifdef __cplusplus
 } //extern "C"
