@@ -1,0 +1,101 @@
+#ifndef _NN_LLIST_H_
+#define _NN_LLIST_H_
+
+/**
+ * Malloc free  linked list implementation.
+ */
+
+#include <stdbool.h>
+#include <stddef.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+struct nn_llist_node;
+
+struct nn_llist_node {
+    struct nn_llist_node* next;
+    struct nn_llist_node* prev;
+
+    void* item;
+};
+
+struct nn_llist {
+    struct nn_llist_node sentinel;
+};
+
+struct nn_llist_iterator {
+    const struct nn_llist* list;
+    struct nn_llist_node* node;
+};
+
+/**
+ * Init the list.
+ */
+void nn_llist_init(struct nn_llist* list);
+
+/**
+ * Deinit the list
+ */
+void nn_llist_deinit(struct nn_llist* list);
+
+
+// return true if the list is empty
+bool nn_llist_empty(const struct nn_llist* list);
+
+/**
+ * return the size of the list, O(n)
+ */
+size_t nn_llist_size(const struct nn_llist* list);
+
+/**
+ * Add an item to the end of the list.
+ *
+ * The node is inserted into the list and the item pointer is stored
+ * in the node.
+ */
+void nn_llist_append(struct nn_llist* list, struct nn_llist_node* node, void* item);
+
+/**
+ * Remove the node from the list pointed to by the iterator
+ */
+void nn_llist_erase(struct nn_llist_iterator* iterator);
+
+/**
+ * Get an iterator pointing to the start of the list
+ */
+struct nn_llist_iterator nn_llist_begin(const struct nn_llist* list);
+
+/**
+ * Increment the iterator to the next item
+ */
+void nn_llist_next(struct nn_llist_iterator* iterator);
+
+/**
+ * Query if the end of the list has been reached
+ */
+bool nn_llist_end(const struct nn_llist_iterator* iterator);
+
+/**
+ * Get an item from the current iterator position
+ */
+void* nn_llist_get_item(const struct nn_llist_iterator* iterator);
+
+/**
+ * Iterate over the list
+ *
+ * struct nn_llist list;
+ * ...
+ * void* item;
+ * NN_LIST_FOREACH(item, &list) {
+ *   ...
+ * }
+ */
+#define NN_LLIST_FOREACH(item, list) for (struct nn_llist_iterator it = nn_llist_begin(list); item = nn_llist_get_item(&it), !nn_llist_end(&it); nn_llist_next(&it))
+
+#ifdef __cplusplus
+} //extern "C"
+#endif
+
+#endif

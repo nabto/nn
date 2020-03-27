@@ -6,6 +6,7 @@ set(src
   src/nn/vector.c
   src/nn/string_set.c
   src/nn/log.c
+  src/nn/llist.c
   )
 
 
@@ -13,6 +14,7 @@ set(test_src
   test/nn/vector_test.cpp
   test/nn/string_set_test.cpp
   test/nn/log_test.cpp
+  test/nn/llist_test.cpp
   test/unit_test.cpp
 
   )
