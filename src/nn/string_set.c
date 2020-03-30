@@ -48,6 +48,20 @@ bool nn_string_set_contains(const struct nn_string_set* set, const char* item)
     return false;
 }
 
+void nn_string_set_erase(struct nn_string_set* set, const char* item)
+{
+    size_t s = nn_vector_size(&set->strings);
+    for (size_t i = 0; i < s; i++) {
+        char* e;
+        nn_vector_get(&set->strings, i, &e);
+        if (strcmp(item, e) == 0) {
+            nn_vector_erase(&set->strings, i);
+            free(e);
+            return;
+        }
+    }
+}
+
 bool nn_string_set_empty(struct nn_string_set* set)
 {
     return nn_vector_empty(&set->strings);

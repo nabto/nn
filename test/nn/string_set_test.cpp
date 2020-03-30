@@ -25,6 +25,27 @@ BOOST_AUTO_TEST_CASE(add_contains)
     nn_string_set_deinit(&set);
 }
 
+BOOST_AUTO_TEST_CASE(erase_item)
+{
+    struct nn_string_set set;
+    nn_string_set_init(&set);
+
+    nn_string_set_insert(&set, "foo");
+    nn_string_set_insert(&set, "bar");
+
+    nn_string_set_erase(&set, "foo");
+
+    BOOST_TEST(!nn_string_set_contains(&set, "foo"));
+    BOOST_TEST(nn_string_set_contains(&set, "bar"));
+
+    nn_string_set_erase(&set, "bar");
+
+    BOOST_TEST(!nn_string_set_contains(&set, "bar"));
+
+    nn_string_set_deinit(&set);
+
+}
+
 BOOST_AUTO_TEST_CASE(iterator)
 {
     struct nn_string_set set;
