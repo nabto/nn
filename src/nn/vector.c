@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
 void nn_vector_init(struct nn_vector* vector, size_t itemSize)
 {
@@ -34,7 +35,7 @@ bool nn_vector_push_back(struct nn_vector* vector, void* element)
         vector->elements = newElements;
         vector->capacity = newCapacity;
     }
-    memcpy(vector->elements + (vector->used*vector->itemSize), element, vector->itemSize);
+    memcpy((uint8_t*)vector->elements + (vector->used*vector->itemSize), element, vector->itemSize);
     vector->used += 1;
     return true;
 }
@@ -46,7 +47,7 @@ void nn_vector_erase(struct nn_vector* vector, size_t index)
         // used -= 1; used(1) - index(1) = 0
         vector->used -= 1;
         size_t after = vector->used - index;
-        memmove(vector->elements + (index * vector->itemSize), vector->elements + ((index+1) * vector->itemSize), vector->itemSize * after);
+        memmove((uint8_t*)vector->elements + (index * vector->itemSize), vector->elements + ((index+1) * vector->itemSize), vector->itemSize * after);
     }
 }
 
@@ -63,7 +64,7 @@ size_t nn_vector_size(const struct nn_vector* vector)
 void nn_vector_get(const struct nn_vector* vector, size_t index, void* element)
 {
     if (index < vector->used) {
-        memcpy(element, vector->elements + (index * vector->itemSize), vector->itemSize);
+        memcpy(element, (uint8_t*)vector->elements + (index * vector->itemSize), vector->itemSize);
     }
 }
 
