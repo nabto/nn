@@ -1,6 +1,9 @@
 #include <boost/test/unit_test.hpp>
 
+
 #include <nn/string_set.h>
+
+#include <set>
 
 BOOST_AUTO_TEST_SUITE(string_set)
 

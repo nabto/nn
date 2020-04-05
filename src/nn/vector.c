@@ -47,7 +47,7 @@ void nn_vector_erase(struct nn_vector* vector, size_t index)
         // used -= 1; used(1) - index(1) = 0
         vector->used -= 1;
         size_t after = vector->used - index;
-        memmove((uint8_t*)vector->elements + (index * vector->itemSize), vector->elements + ((index+1) * vector->itemSize), vector->itemSize * after);
+        memmove((uint8_t*)vector->elements + (index * vector->itemSize), (uint8_t*)vector->elements + ((index+1) * vector->itemSize), vector->itemSize * after);
     }
 }
 
