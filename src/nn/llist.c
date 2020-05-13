@@ -49,6 +49,19 @@ struct nn_llist_iterator nn_llist_append(struct nn_llist* llist, struct nn_llist
     return it;
 }
 
+void nn_llist_insert_before(struct nn_llist_iterator* iterator, struct nn_llist_node* node, void* item)
+{
+    node->item = item;
+
+    struct nn_llist_node* before = iterator->node->prev;
+    struct nn_llist_node* after = iterator->node;
+
+    before->next = node;
+    node->next = after;
+    after->prev = node;
+    node->prev = before;
+}
+
 // erase an node from the llist.
 void nn_llist_erase_node(struct nn_llist_node* node)
 {

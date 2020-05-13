@@ -60,6 +60,11 @@ size_t nn_llist_size(const struct nn_llist* list);
 struct nn_llist_iterator nn_llist_append(struct nn_llist* list, struct nn_llist_node* node, void* item);
 
 /**
+ * Insert node and item right before the element the iterator is pointing at.
+ */
+void nn_llist_insert_before(struct nn_llist_iterator* iterator, struct nn_llist_node* node, void* item);
+
+/**
  * Remove the node from the list pointed to by the iterator
  */
 void nn_llist_erase(struct nn_llist_iterator* iterator);
