@@ -13,6 +13,18 @@ void nn_llist_deinit(struct nn_llist* llist)
 
 }
 
+void nn_llist_node_init(struct nn_llist_node* node)
+{
+    node->next = node;
+    node->prev = node;
+    node->item = NULL;
+}
+
+bool nn_llist_node_in_list(struct nn_llist_node* node)
+{
+    // if a node is not pointing to itself it is in a list.
+    return (node->next != node && node->prev != node);
+}
 
 // return true if the llist is empty
 bool nn_llist_empty(const struct nn_llist* llist)
@@ -70,8 +82,7 @@ void nn_llist_erase_node(struct nn_llist_node* node)
     before->next = after;
     after->prev = before;
 
-    node->prev = node;
-    node->next = node;
+    nn_llist_node_init(node);
 }
 
 void nn_llist_erase(struct nn_llist_iterator* iterator)

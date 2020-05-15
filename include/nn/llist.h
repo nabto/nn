@@ -40,6 +40,16 @@ void nn_llist_init(struct nn_llist* list);
  */
 void nn_llist_deinit(struct nn_llist* list);
 
+/*
+ * Initialize a node which is later used in a list
+ */
+void nn_llist_node_init(struct nn_llist_node* node);
+
+/**
+ * Test if a node is used in a list, init on the node has to be called
+ * before this function works correctly.
+ */
+bool nn_llist_node_in_list(struct nn_llist_node* node);
 
 // return true if the list is empty
 bool nn_llist_empty(const struct nn_llist* list);
