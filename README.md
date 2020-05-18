@@ -1,6 +1,12 @@
 # libnn
 
-Common Data Structures
+DEPRECATED LOCATION
+
+This code has been moved to nabto-common-c/components/nn
+
+
+
+# Common Data Structures
 
 Implemented structures:
 
